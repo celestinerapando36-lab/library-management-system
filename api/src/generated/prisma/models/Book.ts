@@ -245,6 +245,7 @@ export type BookWhereInput = {
   availableCopies?: Prisma.IntFilter<"Book"> | number
   genreId?: Prisma.IntFilter<"Book"> | number
   genre?: Prisma.XOR<Prisma.GenreScalarRelationFilter, Prisma.GenreWhereInput>
+  reviews?: Prisma.ReviewListRelationFilter
 }
 
 export type BookOrderByWithRelationInput = {
@@ -256,6 +257,7 @@ export type BookOrderByWithRelationInput = {
   availableCopies?: Prisma.SortOrder
   genreId?: Prisma.SortOrder
   genre?: Prisma.GenreOrderByWithRelationInput
+  reviews?: Prisma.ReviewOrderByRelationAggregateInput
 }
 
 export type BookWhereUniqueInput = Prisma.AtLeast<{
@@ -270,6 +272,7 @@ export type BookWhereUniqueInput = Prisma.AtLeast<{
   availableCopies?: Prisma.IntFilter<"Book"> | number
   genreId?: Prisma.IntFilter<"Book"> | number
   genre?: Prisma.XOR<Prisma.GenreScalarRelationFilter, Prisma.GenreWhereInput>
+  reviews?: Prisma.ReviewListRelationFilter
 }, "id" | "isbn">
 
 export type BookOrderByWithAggregationInput = {
@@ -307,6 +310,7 @@ export type BookCreateInput = {
   totalCopies?: number
   availableCopies?: number
   genre: Prisma.GenreCreateNestedOneWithoutBooksInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutBookInput
 }
 
 export type BookUncheckedCreateInput = {
@@ -317,6 +321,7 @@ export type BookUncheckedCreateInput = {
   totalCopies?: number
   availableCopies?: number
   genreId: number
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBookInput
 }
 
 export type BookUpdateInput = {
@@ -326,6 +331,7 @@ export type BookUpdateInput = {
   totalCopies?: Prisma.IntFieldUpdateOperationsInput | number
   availableCopies?: Prisma.IntFieldUpdateOperationsInput | number
   genre?: Prisma.GenreUpdateOneRequiredWithoutBooksNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutBookNestedInput
 }
 
 export type BookUncheckedUpdateInput = {
@@ -336,6 +342,7 @@ export type BookUncheckedUpdateInput = {
   totalCopies?: Prisma.IntFieldUpdateOperationsInput | number
   availableCopies?: Prisma.IntFieldUpdateOperationsInput | number
   genreId?: Prisma.IntFieldUpdateOperationsInput | number
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBookNestedInput
 }
 
 export type BookCreateManyInput = {
@@ -420,6 +427,11 @@ export type BookSumOrderByAggregateInput = {
   genreId?: Prisma.SortOrder
 }
 
+export type BookScalarRelationFilter = {
+  is?: Prisma.BookWhereInput
+  isNot?: Prisma.BookWhereInput
+}
+
 export type BookCreateNestedManyWithoutGenreInput = {
   create?: Prisma.XOR<Prisma.BookCreateWithoutGenreInput, Prisma.BookUncheckedCreateWithoutGenreInput> | Prisma.BookCreateWithoutGenreInput[] | Prisma.BookUncheckedCreateWithoutGenreInput[]
   connectOrCreate?: Prisma.BookCreateOrConnectWithoutGenreInput | Prisma.BookCreateOrConnectWithoutGenreInput[]
@@ -462,12 +474,27 @@ export type BookUncheckedUpdateManyWithoutGenreNestedInput = {
   deleteMany?: Prisma.BookScalarWhereInput | Prisma.BookScalarWhereInput[]
 }
 
+export type BookCreateNestedOneWithoutReviewsInput = {
+  create?: Prisma.XOR<Prisma.BookCreateWithoutReviewsInput, Prisma.BookUncheckedCreateWithoutReviewsInput>
+  connectOrCreate?: Prisma.BookCreateOrConnectWithoutReviewsInput
+  connect?: Prisma.BookWhereUniqueInput
+}
+
+export type BookUpdateOneRequiredWithoutReviewsNestedInput = {
+  create?: Prisma.XOR<Prisma.BookCreateWithoutReviewsInput, Prisma.BookUncheckedCreateWithoutReviewsInput>
+  connectOrCreate?: Prisma.BookCreateOrConnectWithoutReviewsInput
+  upsert?: Prisma.BookUpsertWithoutReviewsInput
+  connect?: Prisma.BookWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BookUpdateToOneWithWhereWithoutReviewsInput, Prisma.BookUpdateWithoutReviewsInput>, Prisma.BookUncheckedUpdateWithoutReviewsInput>
+}
+
 export type BookCreateWithoutGenreInput = {
   title: string
   author: string
   isbn: string
   totalCopies?: number
   availableCopies?: number
+  reviews?: Prisma.ReviewCreateNestedManyWithoutBookInput
 }
 
 export type BookUncheckedCreateWithoutGenreInput = {
@@ -477,6 +504,7 @@ export type BookUncheckedCreateWithoutGenreInput = {
   isbn: string
   totalCopies?: number
   availableCopies?: number
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBookInput
 }
 
 export type BookCreateOrConnectWithoutGenreInput = {
@@ -518,6 +546,60 @@ export type BookScalarWhereInput = {
   genreId?: Prisma.IntFilter<"Book"> | number
 }
 
+export type BookCreateWithoutReviewsInput = {
+  title: string
+  author: string
+  isbn: string
+  totalCopies?: number
+  availableCopies?: number
+  genre: Prisma.GenreCreateNestedOneWithoutBooksInput
+}
+
+export type BookUncheckedCreateWithoutReviewsInput = {
+  id?: number
+  title: string
+  author: string
+  isbn: string
+  totalCopies?: number
+  availableCopies?: number
+  genreId: number
+}
+
+export type BookCreateOrConnectWithoutReviewsInput = {
+  where: Prisma.BookWhereUniqueInput
+  create: Prisma.XOR<Prisma.BookCreateWithoutReviewsInput, Prisma.BookUncheckedCreateWithoutReviewsInput>
+}
+
+export type BookUpsertWithoutReviewsInput = {
+  update: Prisma.XOR<Prisma.BookUpdateWithoutReviewsInput, Prisma.BookUncheckedUpdateWithoutReviewsInput>
+  create: Prisma.XOR<Prisma.BookCreateWithoutReviewsInput, Prisma.BookUncheckedCreateWithoutReviewsInput>
+  where?: Prisma.BookWhereInput
+}
+
+export type BookUpdateToOneWithWhereWithoutReviewsInput = {
+  where?: Prisma.BookWhereInput
+  data: Prisma.XOR<Prisma.BookUpdateWithoutReviewsInput, Prisma.BookUncheckedUpdateWithoutReviewsInput>
+}
+
+export type BookUpdateWithoutReviewsInput = {
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  author?: Prisma.StringFieldUpdateOperationsInput | string
+  isbn?: Prisma.StringFieldUpdateOperationsInput | string
+  totalCopies?: Prisma.IntFieldUpdateOperationsInput | number
+  availableCopies?: Prisma.IntFieldUpdateOperationsInput | number
+  genre?: Prisma.GenreUpdateOneRequiredWithoutBooksNestedInput
+}
+
+export type BookUncheckedUpdateWithoutReviewsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  author?: Prisma.StringFieldUpdateOperationsInput | string
+  isbn?: Prisma.StringFieldUpdateOperationsInput | string
+  totalCopies?: Prisma.IntFieldUpdateOperationsInput | number
+  availableCopies?: Prisma.IntFieldUpdateOperationsInput | number
+  genreId?: Prisma.IntFieldUpdateOperationsInput | number
+}
+
 export type BookCreateManyGenreInput = {
   id?: number
   title: string
@@ -533,6 +615,7 @@ export type BookUpdateWithoutGenreInput = {
   isbn?: Prisma.StringFieldUpdateOperationsInput | string
   totalCopies?: Prisma.IntFieldUpdateOperationsInput | number
   availableCopies?: Prisma.IntFieldUpdateOperationsInput | number
+  reviews?: Prisma.ReviewUpdateManyWithoutBookNestedInput
 }
 
 export type BookUncheckedUpdateWithoutGenreInput = {
@@ -542,6 +625,7 @@ export type BookUncheckedUpdateWithoutGenreInput = {
   isbn?: Prisma.StringFieldUpdateOperationsInput | string
   totalCopies?: Prisma.IntFieldUpdateOperationsInput | number
   availableCopies?: Prisma.IntFieldUpdateOperationsInput | number
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBookNestedInput
 }
 
 export type BookUncheckedUpdateManyWithoutGenreInput = {
@@ -554,6 +638,35 @@ export type BookUncheckedUpdateManyWithoutGenreInput = {
 }
 
 
+/**
+ * Count Type BookCountOutputType
+ */
+
+export type BookCountOutputType = {
+  reviews: number
+}
+
+export type BookCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  reviews?: boolean | BookCountOutputTypeCountReviewsArgs
+}
+
+/**
+ * BookCountOutputType without action
+ */
+export type BookCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BookCountOutputType
+   */
+  select?: Prisma.BookCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * BookCountOutputType without action
+ */
+export type BookCountOutputTypeCountReviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReviewWhereInput
+}
+
 
 export type BookSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -564,6 +677,8 @@ export type BookSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   availableCopies?: boolean
   genreId?: boolean
   genre?: boolean | Prisma.GenreDefaultArgs<ExtArgs>
+  reviews?: boolean | Prisma.Book$reviewsArgs<ExtArgs>
+  _count?: boolean | Prisma.BookCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["book"]>
 
 export type BookSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -601,6 +716,8 @@ export type BookSelectScalar = {
 export type BookOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "author" | "isbn" | "totalCopies" | "availableCopies" | "genreId", ExtArgs["result"]["book"]>
 export type BookInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   genre?: boolean | Prisma.GenreDefaultArgs<ExtArgs>
+  reviews?: boolean | Prisma.Book$reviewsArgs<ExtArgs>
+  _count?: boolean | Prisma.BookCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type BookIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   genre?: boolean | Prisma.GenreDefaultArgs<ExtArgs>
@@ -613,6 +730,7 @@ export type $BookPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "Book"
   objects: {
     genre: Prisma.$GenrePayload<ExtArgs>
+    reviews: Prisma.$ReviewPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1017,6 +1135,7 @@ readonly fields: BookFieldRefs;
 export interface Prisma__BookClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   genre<T extends Prisma.GenreDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.GenreDefaultArgs<ExtArgs>>): Prisma.Prisma__GenreClient<runtime.Types.Result.GetResult<Prisma.$GenrePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  reviews<T extends Prisma.Book$reviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Book$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1451,6 +1570,30 @@ export type BookDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Limit how many Books to delete.
    */
   limit?: number
+}
+
+/**
+ * Book.reviews
+ */
+export type Book$reviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Review
+   */
+  select?: Prisma.ReviewSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Review
+   */
+  omit?: Prisma.ReviewOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReviewInclude<ExtArgs> | null
+  where?: Prisma.ReviewWhereInput
+  orderBy?: Prisma.ReviewOrderByWithRelationInput | Prisma.ReviewOrderByWithRelationInput[]
+  cursor?: Prisma.ReviewWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ReviewScalarFieldEnum | Prisma.ReviewScalarFieldEnum[]
 }
 
 /**

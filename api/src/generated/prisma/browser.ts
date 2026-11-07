@@ -32,3 +32,8 @@ export type Book = Prisma.BookModel
  * 
  */
 export type User = Prisma.UserModel
+/**
+ * Model Review
+ * 
+ */
+export type Review = Prisma.ReviewModel
