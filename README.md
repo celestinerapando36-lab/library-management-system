@@ -34,3 +34,7 @@ The trade-off is that reading a book together with its genre needs a join, which
 - `Role` is an enum (`PATRON` or `LIBRARIAN`) instead of a free-text string, so a typo can't create an invalid role. New users default to `PATRON`, the role with the fewest permissions.
 - `isbn`, `Genre.name` and `Genre.slug` are `@unique`, so duplicates are rejected.
 - The seed script uses `upsert`, so it can run more than once without creating duplicate rows.
+
+## Prisma vs a Document Database
+
+The biggest difference I noticed is that relationships are explicit and enforced. In a document database I could have nested a genre inside each book and changed nothing else. In Prisma I stored only a `genreId` and declared a `@relation`, so PostgreSQL itself rejects a book that points to a genre that doesn't exist. The trade-off is that I had to design the whole structure first and change it through migrations, instead of just saving a document with different fields.
