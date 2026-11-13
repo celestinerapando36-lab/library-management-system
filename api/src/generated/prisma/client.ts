@@ -61,3 +61,8 @@ export type User = Prisma.UserModel
  * 
  */
 export type Review = Prisma.ReviewModel
+/**
+ * Model Todo
+ * 
+ */
+export type Todo = Prisma.TodoModel
